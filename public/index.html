@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoApply AI</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1e3a8a, #020617 55%);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .shape {
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      right: 8%;
+      top: 10%;
+      background: linear-gradient(135deg, #38bdf8, #6366f1, #ec4899);
+      border-radius: 40px;
+      transform: rotateX(35deg) rotateY(35deg) rotateZ(10deg);
+      box-shadow: 0 40px 100px rgba(99, 102, 241, 0.6);
+      animation: float 5s ease-in-out infinite;
+      opacity: 0.8;
+      z-index: -1;
+    }
+
+    .shape::before {
+      content: "";
+      position: absolute;
+      inset: 25px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: rotateX(35deg) rotateY(35deg) rotateZ(10deg) translateY(0);
+      }
+      50% {
+        transform: rotateX(45deg) rotateY(20deg) rotateZ(20deg) translateY(-25px);
+      }
+    }
+
+    nav {
+      width: 90%;
+      margin: 25px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 25px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(18px);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #38bdf8;
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, #2563eb, #9333ea);
+      color: white;
+      padding: 12px 22px;
+      border-radius: 30px;
+      border: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      width: 90%;
+      margin: 60px auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 58px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #38bdf8, #a78bfa);
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 28px;
+      padding: 30px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.4);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px;
+      padding: 16px;
+      margin: 12px 0 20px;
+      outline: none;
+      resize: vertical;
+      font-size: 15px;
+    }
+
+    textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #06b6d4, #2563eb, #9333ea);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(37, 99, 235, 0.45);
+    }
+
+    pre {
+      margin-top: 25px;
+      background: #020617;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 20px;
+      white-space: pre-wrap;
+      min-height: 150px;
+      color: #dbeafe;
+    }
+
+    .features {
+      width: 90%;
+      margin: 40px auto 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature {
+      padding: 25px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .feature h3 {
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+
+    .feature p {
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .shape {
+        width: 180px;
+        height: 180px;
+        right: -40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="shape"></div>
+
+  <nav>
+    <div class="logo">AutoApply <span>AI</span></div>
+    <button class="nav-btn">AI Job Assistant</button>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <h1>Apply Smarter With <span>AI Power</span></h1>
+      <p>
+        Paste your resume and job description. AutoApply AI will create a match score,
+        missing skills, cover letter, and HR email for your job application.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Analyze Your Job Match</h2>
+
+      <textarea id="resume" placeholder="Paste your resume here..."></textarea>
+
+      <textarea id="job" placeholder="Paste job description here..."></textarea>
+
+      <button onclick="run()">Generate AI Application</button>
+      
+      <pre id="output">Your AI result will appear here...</pre>
+      <button onclick="copyResult()">Copy Result</button>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <h3>Resume Match</h3>
+      <p>AI checks how well your resume matches the job description.</p>
+    </div>
+
+    <div class="feature">
+      <h3>Cover Letter</h3>
+      <p>Generate a personalized cover letter in seconds.</p>
+    </div>
+
+    <div class="feature">
+      <h3>HR Email</h3>
+      <p>Create a professional email to send with your application.</p>
+    </div>
+  </section>
+
+  <script>
+    async function run() {
+      const resume = document.getElementById("resume").value;
+      const jobDescription = document.getElementById("job").value;
+      const output = document.getElementById("output");
+
+      if (!resume || !jobDescription) {
+        alert("Please enter both resume and job description");
+        return;
+      }
+
+      output.innerText = "⚡ AI is analyzing your job match...";
+
+      try {
+        const res = await fetch("/analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ resume, jobDescription })
+        });
+
+        const data = await res.json();
+        output.innerText = data.result || data.error || "Something went wrong";
+      } catch (error) {
+        output.innerText = "Error connecting to server.";
+      }
+    }
+    function copyResult() {
+  const text = document.getElementById("output").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Copied!");
+}
+  </script>
+
+</body>
+</html>
